@@ -13,5 +13,15 @@ import io.reactivex.Flowable;
 @Dao
 public interface TaskDao {
 
+    @Insert
+    void insert(Task t);
 
+    @Delete
+    void delete(Task t);
+
+    @Update
+    void update(Task t);
+
+    @Query("select * from task")
+    Flowable<List<Task>> getAll();
 }

@@ -55,5 +55,16 @@ public class TaskDialogFragment extends DialogFragment {
         }
 
 
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DBClient.getInstance(context).getAppDatabase()
+                        .taskDao().insert(new Task(task,desc,finishBy));
+
+            }
+        }).start();
+
+
     }
 }

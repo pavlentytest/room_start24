@@ -5,4 +5,7 @@ import androidx.room.RoomDatabase;
 
 @Database(entities = {Task.class}, version = 1)
 public abstract class AppDB extends RoomDatabase {
+    // инициализация таблицы в базе данных
+    public abstract TaskDao taskDao();
+
 }

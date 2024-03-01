@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,6 +37,20 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(v -> showDialog());
         Log.d("RRRR","onCreate()");
+
+        Disposable disposable = DBClient.getInstance(this)
+                .getAppDatabase()
+                .taskDao()
+                .getAll()
+                // поток интерфейса UI наблюдает за Flowable данными
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tasks -> {
+                    TaskAdapter adapter = new TaskAdapter(MainActivity.this, tasks);
+                    recyclerView.setAdapter(adapter);
+                });
+
+        //TaskAdapter adapter = new TaskAdapter(MainActivity.this, tasks);
+        //recyclerView.setAdapter(adapter);
 
     }
 
